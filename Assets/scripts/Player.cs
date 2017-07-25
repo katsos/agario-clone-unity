@@ -10,7 +10,9 @@ public class Player : MonoBehaviour {
 
 	void Awake() {
 		transform.localScale = new Vector3(startingSize, startingSize, 0);
+		gameObject.GetComponent<SpriteRenderer>().color = getRandomColor();
 	}
+	
 	void Update() {
 		if (isMouseInsideViewport()) Move();
 	}
@@ -28,4 +30,9 @@ public class Player : MonoBehaviour {
 		Rect screen = new Rect(0, 0, Screen.width, Screen.height);
 		return screen.Contains(Input.mousePosition);
 	}
+
+	Color getRandomColor() {
+		return new Color(Random.value,Random.value, Random.value);
+	}
+
 }
