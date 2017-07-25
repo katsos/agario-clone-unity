@@ -192,6 +192,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingSize: 4
+  startingMovementDelay: 0.8
+  speed: 4
 --- !u!1 &1643620179
 GameObject:
   m_ObjectHideFlags: 0
