@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 	public float startingSize;
 	public float startingMovementDelay;
 	public float speed;
+	public float sizeAugmenter;
 
 	void Awake() {
 		transform.localScale = new Vector3(startingSize, startingSize, 0);
@@ -15,6 +16,18 @@ public class Player : MonoBehaviour {
 	
 	void Update() {
 		if (isMouseInsideViewport()) Move();
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.tag == "food") {
+			getBigger();
+			Destroy(other.gameObject);
+		}
+	}
+
+	/* Custom Functions */
+	void getBigger() {
+		transform.localScale += new Vector3(sizeAugmenter, sizeAugmenter, 0);
 	}
 
 	void Move() {
