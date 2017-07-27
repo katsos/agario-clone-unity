@@ -8,14 +8,17 @@ public class Player : MonoBehaviour {
 	public float startingMovementDelay;
 	public float speed;
 	public float sizeAugmenter;
+	Rigidbody2D rigidBody2D;
 
 	void Awake() {
 		transform.localScale = new Vector3(startingSize, startingSize, 0);
-		gameObject.GetComponent<SpriteRenderer>().color = getRandomColor();
+		rigidBody2D = GetComponent<Rigidbody2D>();
+		GetComponent<SpriteRenderer>().color = getRandomColor();
 	}
-	
-	void Update() {
+
+	void FixedUpdate() {
 		if (isMouseInsideViewport()) Move();
+		else StopMoving();
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -33,10 +36,12 @@ public class Player : MonoBehaviour {
 	void Move() {
 		if (Time.time < startingMovementDelay) return;
 
-		Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		targetPosition.z = 0;
+		Vector2 route = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+		rigidBody2D.velocity = route.normalized * speed; // we use normalized to keep only direction
+	}
 
-		transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+	void StopMoving() {
+		rigidBody2D.velocity = new Vector2(0, 0);
 	}
 
 	bool isMouseInsideViewport() {
