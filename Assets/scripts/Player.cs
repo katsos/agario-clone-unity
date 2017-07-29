@@ -9,10 +9,12 @@ public class Player : MonoBehaviour {
 	public float speed;
 	public float sizeAugmenter;
 	Rigidbody2D rigidBody2D;
+	FoodSpawn FoodSpawn;
 
 	void Awake() {
-		transform.localScale = new Vector3(startingSize, startingSize, 0);
 		rigidBody2D = GetComponent<Rigidbody2D>();
+		FoodSpawn = GameObject.Find("_GameManager").GetComponent<FoodSpawn>();		
+		transform.localScale = new Vector3(startingSize, startingSize, 0);
 		GetComponent<SpriteRenderer>().color = getRandomColor();
 	}
 
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "food") {
 			getBigger();
+			FoodSpawn.availableFoodCount--;
 			Destroy(other.gameObject);
 		}
 	}
