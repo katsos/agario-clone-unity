@@ -39,8 +39,10 @@ public class Player : MonoBehaviour {
 	void Move() {
 		if (Time.time < startingMovementDelay) return;
 
-		Vector2 route = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-		rigidBody2D.velocity = route.normalized * speed; // we use normalized to keep only direction
+		Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		float movementSpeed = speed * Time.fixedDeltaTime;
+		Vector2 movement = Vector2.MoveTowards(transform.position, targetPosition, movementSpeed);
+		rigidBody2D.MovePosition(movement);
 	}
 
 	void StopMoving() {
