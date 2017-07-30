@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void StopMoving() {
-		rigidBody2D.velocity = new Vector2(0, 0);
+		rigidBody2D.velocity = Vector2.zero;
 	}
 
 	bool isMouseInsideViewport() {
